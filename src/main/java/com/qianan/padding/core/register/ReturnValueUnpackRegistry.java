@@ -5,7 +5,7 @@ import com.qianan.padding.core.register.unpack.ReturnValueUnpackHandler;
 public class ReturnValueUnpackRegistry {
     private ReturnValueUnpackHandler returnValueUnpackHandler;
 
-    public void addAdapter(ReturnValueUnpackHandler returnValueUnpackHandler) {
+    public void addUnpack(ReturnValueUnpackHandler returnValueUnpackHandler) {
         this.returnValueUnpackHandler = returnValueUnpackHandler;
     }
 

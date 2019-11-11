@@ -1,5 +1,7 @@
 package com.qianan.padding.core.register.adapter;
 
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
 public class SingleObjectAdapter implements ReturnValueListAdapter {
@@ -11,7 +13,7 @@ public class SingleObjectAdapter implements ReturnValueListAdapter {
 
     @Override
     public List adapter(Object o) {
-        return null;
+        return Lists.newArrayList(o);
     }
 
     @Override

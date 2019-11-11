@@ -138,7 +138,7 @@ public class DataPaddingResponseBodyAdvice extends AbstractMappingJacksonRespons
         try {
             return baseDataSupplier.mapByIds(ids);
         } catch (Exception ex) {
-            throw new RuntimeException("DataSupplier Provided An Exception");
+            throw new RuntimeException("DataSupplier Provided An Exception | " + ex.getMessage() + " |");
         }
     }
 

@@ -1,5 +1,7 @@
 package com.qianan.padding.core.register.adapter;
 
+import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,7 +15,7 @@ public class CollectionAdapter implements ReturnValueListAdapter {
     @Override
     public List adapter(Object o) {
         Collection c = (Collection) o;
-        return new ArrayList(c);
+        return Lists.newArrayList(c);
     }
 
     @Override
