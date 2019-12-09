@@ -150,32 +150,32 @@ public class DataPaddingResponseBodyAdvice extends AbstractMappingJacksonRespons
 
     private static void copyPropertiesActive(Object source, Object target, List<String> activeName) {
 
-        Class<?> actualEditable = target.getClass();
+        Class<?> actualEditable = source.getClass();
         PrefixAliasPadding prefixAliasPadding = actualEditable.getDeclaredAnnotation(PrefixAliasPadding.class);
         String prefix = Objects.nonNull(prefixAliasPadding) ? prefixAliasPadding.alias() : "";
 
-        PropertyDescriptor[] targetPds = BeanUtils.getPropertyDescriptors(actualEditable);
+        PropertyDescriptor[] sourcePds = BeanUtils.getPropertyDescriptors(actualEditable);
 
-        for (PropertyDescriptor targetPd : targetPds) {
-            Method writeMethod = targetPd.getWriteMethod();
-            if (writeMethod != null && activeName.contains(targetPd.getName())) {
-                PropertyDescriptor sourcePd = BeanUtils.getPropertyDescriptor(source.getClass(), toCamel(prefix, targetPd.getName()));
-                if (sourcePd != null) {
-                    Method readMethod = sourcePd.getReadMethod();
-                    if (readMethod != null &&
-                            ClassUtils.isAssignable(writeMethod.getParameterTypes()[0], readMethod.getReturnType())) {
+        for (PropertyDescriptor sourcePd : sourcePds) {
+            Method readMethod = sourcePd.getReadMethod();
+            String sName = toCamel(prefix, sourcePd.getName());
+            if (readMethod != null && activeName.contains(sName)) {
+                PropertyDescriptor targetPd = BeanUtils.getPropertyDescriptor(target.getClass(), sName);
+                if (targetPd != null) {
+                    Method writeMethod = targetPd.getWriteMethod();
+                    if (writeMethod != null) {
                         try {
-                            if (!Modifier.isPublic(readMethod.getDeclaringClass().getModifiers())) {
+                            if (!Modifier.isPublic(writeMethod.getDeclaringClass().getModifiers())) {
                                 readMethod.setAccessible(true);
                             }
                             Object value = readMethod.invoke(source);
-                            if (!Modifier.isPublic(writeMethod.getDeclaringClass().getModifiers())) {
+                            if (!Modifier.isPublic(readMethod.getDeclaringClass().getModifiers())) {
                                 writeMethod.setAccessible(true);
                             }
                             writeMethod.invoke(target, value);
                         } catch (Throwable ex) {
                             throw new FatalBeanException(
-                                    "Could not copy property '" + targetPd.getName() + "' from source to target", ex);
+                                    "Could not copy property '" + sourcePd.getName() + "' from target1 to source", ex);
                         }
                     }
                 }
@@ -190,7 +190,7 @@ public class DataPaddingResponseBodyAdvice extends AbstractMappingJacksonRespons
 
         char c0;
         if ((c0 = name.charAt(0)) >= 'a' && c0 <= 'z') {
-            return name.replaceFirst(String.valueOf(c0), String.valueOf((char)(c0 - 32)));
+            return prefix + name.replaceFirst(String.valueOf(c0), String.valueOf((char)(c0 - 32)));
         }
         return name;
     }
