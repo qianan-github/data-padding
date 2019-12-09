@@ -76,6 +76,7 @@ public class TestController {
 ### 实现接口，提供数据查询结果
 ```java
 @DataSupplier
+@Component
 public class UserDataSupplier implements BaseDataSupplier<UserEntity> {
 
     @Override
