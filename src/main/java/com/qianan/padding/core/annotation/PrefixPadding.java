@@ -6,5 +6,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface PrefixPadding {
-    String alias() default "";
+    String prefix() default "";
 }

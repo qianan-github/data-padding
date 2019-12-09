@@ -152,7 +152,7 @@ public class DataPaddingResponseBodyAdvice extends AbstractMappingJacksonRespons
 
         Class<?> actualEditable = source.getClass();
         PrefixPadding prefixPadding = actualEditable.getDeclaredAnnotation(PrefixPadding.class);
-        String prefix = Objects.nonNull(prefixPadding) ? prefixPadding.alias() : "";
+        String prefix = Objects.nonNull(prefixPadding) ? prefixPadding.prefix() : "";
 
         PropertyDescriptor[] sourcePds = BeanUtils.getPropertyDescriptors(actualEditable);
 
