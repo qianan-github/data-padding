@@ -14,6 +14,7 @@
 - [x] 自定义集合类型出参
 - [ ] ~~是否开启集合嵌套填充~~
 - [ ] FieldPadding控制集合是否填充
+- [x] PrefixAliasPadding注解
 
 ## Quick Start
 注意：当前版本1.0-SNAPSHOT
