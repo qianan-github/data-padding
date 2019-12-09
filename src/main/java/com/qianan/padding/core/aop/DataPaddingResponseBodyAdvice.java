@@ -4,7 +4,7 @@ import com.qianan.padding.core.BaseDataSupplier;
 import com.qianan.padding.core.annotation.DataPadding;
 import com.qianan.padding.core.annotation.FieldPadding;
 import com.qianan.padding.core.annotation.KeyPadding;
-import com.qianan.padding.core.annotation.PrefixAliasPadding;
+import com.qianan.padding.core.annotation.PrefixPadding;
 import com.qianan.padding.core.register.ReturnValueListAdapterRegistry;
 import com.qianan.padding.core.register.ReturnValueUnpackRegistry;
 import lombok.extern.slf4j.Slf4j;
@@ -151,8 +151,8 @@ public class DataPaddingResponseBodyAdvice extends AbstractMappingJacksonRespons
     private static void copyPropertiesActive(Object source, Object target, List<String> activeName) {
 
         Class<?> actualEditable = source.getClass();
-        PrefixAliasPadding prefixAliasPadding = actualEditable.getDeclaredAnnotation(PrefixAliasPadding.class);
-        String prefix = Objects.nonNull(prefixAliasPadding) ? prefixAliasPadding.alias() : "";
+        PrefixPadding prefixPadding = actualEditable.getDeclaredAnnotation(PrefixPadding.class);
+        String prefix = Objects.nonNull(prefixPadding) ? prefixPadding.alias() : "";
 
         PropertyDescriptor[] sourcePds = BeanUtils.getPropertyDescriptors(actualEditable);
 
