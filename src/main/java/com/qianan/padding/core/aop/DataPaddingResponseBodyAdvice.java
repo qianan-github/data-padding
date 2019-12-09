@@ -159,7 +159,7 @@ public class DataPaddingResponseBodyAdvice extends AbstractMappingJacksonRespons
         for (PropertyDescriptor targetPd : targetPds) {
             Method writeMethod = targetPd.getWriteMethod();
             if (writeMethod != null && activeName.contains(targetPd.getName())) {
-                PropertyDescriptor sourcePd = BeanUtils.getPropertyDescriptor(source.getClass(), prefix + targetPd.getName());
+                PropertyDescriptor sourcePd = BeanUtils.getPropertyDescriptor(source.getClass(), toCamel(prefix, targetPd.getName()));
                 if (sourcePd != null) {
                     Method readMethod = sourcePd.getReadMethod();
                     if (readMethod != null &&
@@ -181,6 +181,18 @@ public class DataPaddingResponseBodyAdvice extends AbstractMappingJacksonRespons
                 }
             }
         }
+    }
+
+    private static String toCamel(String prefix, String name) {
+        if (StringUtils.isEmpty(prefix)) {
+            return name;
+        }
+
+        char c0;
+        if ((c0 = name.charAt(0)) >= 'a' && c0 <= 'z') {
+            return name.replaceFirst(String.valueOf(c0), String.valueOf((char)(c0 - 32)));
+        }
+        return name;
     }
 
     private List<String> getActivePropertiesName(Class<?> clazz) {
