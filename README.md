@@ -14,6 +14,7 @@
 - [x] 自定义集合类型出参
 - [ ] ~~是否开启集合嵌套填充~~
 - [ ] FieldPadding控制集合是否填充
+- [x] PrefixAliasPadding注解
 
 ## Quick Start
 注意：当前版本1.0-SNAPSHOT
@@ -75,6 +76,7 @@ public class TestController {
 ### 实现接口，提供数据查询结果
 ```java
 @DataSupplier
+@Component
 public class UserDataSupplier implements BaseDataSupplier<UserEntity> {
 
     @Override
